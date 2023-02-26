@@ -16,3 +16,7 @@
 **HowToUse:**
 1. 1 fast press on the "CapsLk" will switch system languages
 2. Hold for a 0.5 second will change Caps mode **ON** or **OFF**
+
+**Special thanks to:**
+1. https://ahk-wiki.ru/
+2. AHK-v2-script-converter project https://github.com/mmikeww/AHK-v2-script-converter
