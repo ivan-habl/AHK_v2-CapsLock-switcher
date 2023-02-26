@@ -7,7 +7,7 @@
 
 **HowToInstall:**
 1. Install script runner:
-- v2. From here https://www.autohotkey.com/
+- v2.x From here https://www.autohotkey.com/
 2. Run shell:startup
 3. Copy "CapsLk_switcher.ahk" file to the directory
 4. Right click on the file and select "Run Script"
