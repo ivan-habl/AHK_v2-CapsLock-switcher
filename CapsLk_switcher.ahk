@@ -3,17 +3,22 @@ SendMode "Input"
 
 $CapsLock:: 
 {
-	CapsError := !KeyWait("CapsLock", "T0.5") ;When I press CapsLock wait 0.5 seconds for CapsLock to be released
-	
-	if CapsError ;If Capslock wasn't release within 0.5 second
-	{ 
-		if GetKeyState("CapsLock", "T") = 0
-		SetCapsLockState("on")
-		else 
-		SetCapsLockState("off")
-		CapsError := !KeyWait("CapsLock") ;Indefinitely wait for the release
-	}
-	
-	else Send("{Alt Down}{Shift Down}{Shift Up}{Alt Up}")
-	return
-} 
+    ; Ждем отпускания клавиши не более 0.3 сек (0.5 часто слишком долго для комфорта)
+    if KeyWait("CapsLock", "T0.3") 
+    {
+        ; Если успели отпустить (короткое нажатие)
+        Send "#{Space}"
+    }
+    else 
+    {
+        ; Если таймер истек (длинное нажатие)
+        ; Инвертируем состояние CapsLock (! означает НЕ текущее состояние)
+        SetCapsLockState !GetKeyState("CapsLock", "T")
+        
+        ; (Опционально) Звуковой сигнал, чтобы понять, что режим переключился
+        SoundBeep 500, 50 
+
+        ; Ждем физического отпускания, чтобы не переключать туда-сюда
+        KeyWait "CapsLock"
+    }
+}
