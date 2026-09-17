@@ -1,22 +1,39 @@
 # AHK_v2-CapsLock-switcher
-- If you want to make your CapsLook button works like on a Macbook. This one will help
-- I found the original code (by Sergey Zavadsky) in the forum thread https://www.autohotkey.com/boards/viewtopic.php?f=6&t=95338
 
-**Works on:**
-- Windows 32-bit / x64 with **default** Switch Input Method: **SHIFT + ALT** (You can change it in a script file)
+- Если хотите, чтобы клавиша CapsLock работала как на Macbook — этот скрипт поможет.
+  **Работает на:**
+- Windows 32-bit / x64, переключение раскладки **по умолчанию**: **ALT + SHIFT** (можно изменить в файле скрипта)
 
-**HowToInstall:**
-1. Install script runner:
-- v2.x From here https://www.autohotkey.com/
-2. Run shell:startup
-3. Copy "CapsLk_switcher.ahk" file to the directory
-4. Right click on the file and select "Run Script"
-5. Enjoy
+**Как установить:**
 
-**HowToUse:**
-1. 1 fast press on the "CapsLk" will switch system languages
-2. Hold for a 0.5 second will change Caps mode **ON** or **OFF**
+1. Установите интерпретатор скрипта AutoHotkey v2.x https://www.autohotkey.com/
+2. Скачайте файл "CapsLk_switcher.ahk" из этого репозитория в любую удобную папку
+3. Запустите его двойным кликом (либо настройте автозапуск с правами администратора — см. раздел ниже)
 
-**Special thanks to:**
-1. https://ahk-wiki.ru/
-2. AHK-v2-script-converter project https://github.com/mmikeww/AHK-v2-script-converter
+**Как использовать:**
+
+1. Обычное нажатие **CapsLock** — переключает раскладку клавиатуры
+2. **Left Alt + CapsLock** — переключает настоящее состояние Caps Lock (ВКЛ/ВЫКЛ)
+
+**Запуск с правами администратора (через Планировщик заданий):**
+
+Некоторые окна в Windows (Диспетчер задач, Редактор реестра и другие системные инструменты) всегда запускаются с повышенными правами. Если скрипт запущен без повышения прав, пока фокус находится в таком окне, Windows блокирует его клавиатурный хук (защита UIPI), и CapsLock в этот момент работает как обычная системная клавиша, а не как хоткей скрипта. Чтобы это исправить, скрипт нужно запускать с правами администратора — удобнее всего сделать это через Планировщик заданий, чтобы не подтверждать UAC при каждом входе в систему:
+
+1. Откройте **Планировщик заданий** (Task Scheduler).
+2. В правой панели выберите **"Создать задачу..."** ("Create Task...") — не "простую задачу".
+3. На вкладке **General**:
+    - укажите имя задачи, например `CapsLk_switcher`
+    - поставьте галочку **"Run with highest privileges"**
+4. На вкладке **Triggers**:
+    - нажмите **New**, в поле "Begin the task" выберите **At log on**, укажите своего пользователя
+5. На вкладке **Actions**:
+    - нажмите **New**, Action: _Start a program_
+    - в поле **Program/script** укажите путь к `AutoHotkey64.exe` (обычно `C:\Program Files\AutoHotkey\v2\AutoHotkey64.exe`)
+    - в поле **Add arguments** укажите полный путь к файлу `"CapsLk_switcher.ahk"` в кавычках
+6. Сохраните задачу.
+
+При следующем входе в систему скрипт запустится автоматически с правами администратора, без всплывающего окна UAC, и будет корректно работать даже когда фокус находится в элевированных окнах.
+
+**Благодарности:**
+
+1. Sergey Zavadsky - автор оригинального скрипта для AHK v1, который я адаптировал под AHK v2.

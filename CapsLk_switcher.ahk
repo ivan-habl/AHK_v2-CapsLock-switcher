@@ -1,24 +1,7 @@
-#Requires AutoHotkey v2.0
-SendMode "Input"
+﻿#Requires AutoHotkey v2.0
 
-$CapsLock:: 
-{
-    ; Ждем отпускания клавиши не более 0.3 сек (0.5 часто слишком долго для комфорта)
-    if KeyWait("CapsLock", "T0.3") 
-    {
-        ; Если успели отпустить (короткое нажатие)
-        Send "#{Space}"
-    }
-    else 
-    {
-        ; Если таймер истек (длинное нажатие)
-        ; Инвертируем состояние CapsLock (! означает НЕ текущее состояние)
-        SetCapsLockState !GetKeyState("CapsLock", "T")
-        
-        ; (Опционально) Звуковой сигнал, чтобы понять, что режим переключился
-        SoundBeep 500, 50 
+SetCapsLockState("Off")  ; сбрасываем реальное состояние CapsLock при старте скрипта
 
-        ; Ждем физического отпускания, чтобы не переключать туда-сюда
-        KeyWait "CapsLock"
-    }
-}
+$CapsLock::Send("{Alt down}{Shift down}{Shift up}{Alt up}")   ; просто CapsLock — смена раскладки
+
+$<!CapsLock::SetCapsLockState(GetKeyState("CapsLock", "T") ? "Off" : "On")  ; Left Alt + CapsLock — настоящий Caps Lock
